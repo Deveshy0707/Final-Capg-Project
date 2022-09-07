@@ -6,7 +6,7 @@ public class PlaceOrder {
 
     private Long restrauntId;
     private String restrauntName;
-    private List<ItemDetails> itemList;
+    private List<Long> itemList;
 
     public Long getRestrauntId() {
         return restrauntId;
@@ -24,11 +24,11 @@ public class PlaceOrder {
         this.restrauntName = restrauntName;
     }
 
-    public List<ItemDetails> getItemList() {
+    public List<Long> getItemList() {
         return itemList;
     }
 
-    public void setItemList(List<ItemDetails> itemList) {
+    public void setItemList(List<Long> itemList) {
         this.itemList = itemList;
     }
 }

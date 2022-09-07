@@ -6,10 +6,8 @@ public class OrderDetails {
 
     private Long restrauntId;
 
-
     private String restauntName;
 
-    //private List<Long> itemList;
     private Long itemCount;
     private Double totalPrice;
     private String deliveryStatus;

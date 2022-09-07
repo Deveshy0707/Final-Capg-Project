@@ -5,24 +5,25 @@ import com.app.orders.dto.FullOrderDetails;
 import com.app.orders.dto.ItemDetails;
 import com.app.orders.dto.OrderDetails;
 import com.app.orders.entity.Order;
-import com.app.orders.exceptions.InavlidDeliveryStatusException;
+import com.app.orders.exceptions.InvalidDeliveryStatusException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class OrderUtil {
 
-    /*public Order OrderDetils_To_Order(OrderDetails given){
+    @Autowired
+    private RestTemplate restTemplate;
 
-        Order order =new Order();
-        order.setRestrauntId(given.getRestrauntId());
-        order.setRestrauntName(given.getRestauntName());
-        order.s
-
-        return new Order();
-    }*/
+    ///////////
+    @Value("")
+    private String itemBaseUrl;
 
     public OrderDetails Order_To_OrderDetails(Order given){
 
@@ -41,7 +42,7 @@ public class OrderUtil {
         FullOrderDetails fullorderDetails=new FullOrderDetails();
         fullorderDetails.setRestrauntId(given.getRestrauntId());
         fullorderDetails.setRestauntName(given.getRestrauntName());
-        fullorderDetails.setItemsList(given.getItemList());
+        fullorderDetails.setItemsList(getItems(given.getItemList()));
         fullorderDetails.setTotalPrice(given.getTotalPrice());
         fullorderDetails.setDeliveryStatus(enum_To_String(given.getDeliveryStatus()));
 
@@ -55,7 +56,7 @@ public class OrderUtil {
         return desired;
     }
 
-    public DeliveryStatus String_To_Enum(String given) throws InavlidDeliveryStatusException {
+    public DeliveryStatus String_To_Enum(String given) throws InvalidDeliveryStatusException {
 
         DeliveryStatus values[]= DeliveryStatus.values();
 
@@ -68,7 +69,7 @@ public class OrderUtil {
             }
         }
 
-        throw new InavlidDeliveryStatusException("Inavlid delivery status");
+        throw new InvalidDeliveryStatusException("Inavlid delivery status");
 
     }
 
@@ -83,5 +84,26 @@ public class OrderUtil {
 
         return list;
     }
+
+    public Double getTotal(List<Long> itemId){
+
+        return 100.0;
+    }
+
+
+    /*
+    public List<ItemDetails> getItems(List<Long> itemsId){
+        String url= itemBaseUrl+ "/";
+
+        ItemDetails[] items=restTemplate.getForObject(url, ItemDetails[].class);
+        List<ItemDetails> list= Arrays.asList(items);
+        return list;
+    }
+    public Double getTotal(List<Long> itemId){
+        String url= itemBaseUrl+ "/";
+
+        Double totalPrice=restTemplate.getForObject(url, Double.class);
+        return totalPrice;
+    }*/
 
 }

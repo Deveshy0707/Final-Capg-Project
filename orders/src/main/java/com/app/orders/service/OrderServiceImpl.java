@@ -3,7 +3,7 @@ package com.app.orders.service;
 import com.app.orders.constant.DeliveryStatus;
 import com.app.orders.dto.*;
 import com.app.orders.entity.Order;
-import com.app.orders.exceptions.InavlidDeliveryStatusException;
+import com.app.orders.exceptions.InvalidDeliveryStatusException;
 import com.app.orders.exceptions.OderNotFoundException;
 import com.app.orders.repository.IItemsRepository;
 import com.app.orders.repository.IOrderRepository;
@@ -33,14 +33,12 @@ public class OrderServiceImpl implements IOrderService{
     @Override
     //
     public OrderDetails placeOrder(PlaceOrder createOrder) {
-
+        /*
         for(ItemDetails it: createOrder.getItemList()){
             ;
-        }
+        }*/
         Double totalPrice=0.0;
-        for(ItemDetails it: createOrder.getItemList()){
-            totalPrice+=it.getPrice();
-        }
+        totalPrice=orderUtil.getTotal(createOrder.getItemList());
 
         Order order= new Order();
         order.setRestrauntId(createOrder.getRestrauntId());
@@ -54,26 +52,6 @@ public class OrderServiceImpl implements IOrderService{
         OrderDetails orderDetails= orderUtil.Order_To_OrderDetails(order);
         return orderDetails;
     }
-    /*
-    public OrderDetails placeOrder(Long id, String restrauntName,List<ItemDetails> itemList) {
-
-        Double totalPrice=0.0;
-        for(ItemDetails it: itemList){
-            totalPrice+=it.getPrice();
-        }
-
-        Order order= new Order();
-        order.setRestrauntId(id);
-        order.setRestrauntName(restrauntName);
-        order.setItemList(itemList);
-        order.setTotalPrice(totalPrice);
-        order.setDeliveryStatus(DeliveryStatus.NOT_DISPATCHED);
-
-        order=repository.save(order);
-
-        OrderDetails orderDetails= orderUtil.Order_To_OrderDetails(order);
-        return orderDetails;
-    }*/
 
     //
     @Override
@@ -119,7 +97,7 @@ public class OrderServiceImpl implements IOrderService{
     }
 
     @Override
-    public OrderDetails changeDeliveryStatus(ChangeOrderStatus orderStatus) throws OderNotFoundException, InavlidDeliveryStatusException {
+    public OrderDetails changeDeliveryStatus(ChangeOrderStatus orderStatus) throws OderNotFoundException, InvalidDeliveryStatusException {
         Optional<Order> optional= orderRepository.findById(orderStatus.getOrderId());
 
         if(optional.isEmpty()){
@@ -133,21 +111,6 @@ public class OrderServiceImpl implements IOrderService{
         OrderDetails orderDetails=orderUtil.Order_To_OrderDetails(order);
         return orderDetails;
     }
-    /*
-    public OrderDetails changeDeliveryStatus(Long id, String deliveryStatus) throws OderNotFoundException, InavlidDeliveryStatusException {
-        Optional<Order> optional=repository.findById(id);
-
-        if(optional.isEmpty()){
-            throw new OderNotFoundException("Order not found in database");
-        }
-
-        Order order=optional.get();
-        DeliveryStatus status= orderUtil.String_To_Enum(deliveryStatus);
-        order.setDeliveryStatus(status);
-
-        OrderDetails orderDetails=orderUtil.Order_To_OrderDetails(order);
-        return orderDetails;
-    }*/
 
     @Override
     public String cancelOrder(Long id) throws OderNotFoundException {

@@ -1,7 +1,7 @@
 package com.app.orders.service;
 
 import com.app.orders.dto.*;
-import com.app.orders.exceptions.InavlidDeliveryStatusException;
+import com.app.orders.exceptions.InvalidDeliveryStatusException;
 import com.app.orders.exceptions.OderNotFoundException;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public interface IOrderService {
     //List<OrderDetails> checkAllOrderCustomer(List<Long> orderId) throws OderNotFoundException;
     FullOrderDetails getFullOrderDetails(Long id) throws OderNotFoundException;
 
-    OrderDetails changeDeliveryStatus(ChangeOrderStatus orderStatus) throws OderNotFoundException, InavlidDeliveryStatusException;
+    OrderDetails changeDeliveryStatus(ChangeOrderStatus orderStatus) throws OderNotFoundException, InvalidDeliveryStatusException;
     //OrderDetails changeDeliveryStatus(Long id, String deliveryStatus) throws OderNotFoundException, InavlidDeliveryStatusException;
     String cancelOrder(Long id) throws OderNotFoundException;
 }
