@@ -4,8 +4,9 @@ import com.app.orders.constant.DeliveryStatus;
 import com.app.orders.dto.FullOrderDetails;
 import com.app.orders.dto.ItemDetails;
 import com.app.orders.dto.OrderDetails;
+import com.app.orders.entity.Items;
 import com.app.orders.entity.Order;
-import com.app.orders.exceptions.InavlidDeliveryStatusException;
+import com.app.orders.exceptions.InvalidDeliveryStatusException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -36,6 +37,16 @@ public class OrderUtil {
         return orderDetails;
     }
 
+    public Items itemDetails_To_Items(ItemDetails given){
+
+        Items items=new Items();
+        items.setItemId(given.getId());
+        items.setItemName(given.getName());
+        items.setPrice(given.getPrice());
+
+        return items;
+    }
+
     public FullOrderDetails Order_To_FullOrderDetails(Order given){
 
         FullOrderDetails fullorderDetails=new FullOrderDetails();
@@ -55,7 +66,7 @@ public class OrderUtil {
         return desired;
     }
 
-    public DeliveryStatus String_To_Enum(String given) throws InavlidDeliveryStatusException {
+    public DeliveryStatus String_To_Enum(String given) throws InvalidDeliveryStatusException {
 
         DeliveryStatus values[]= DeliveryStatus.values();
 
@@ -68,7 +79,7 @@ public class OrderUtil {
             }
         }
 
-        throw new InavlidDeliveryStatusException("Inavlid delivery status");
+        throw new InvalidDeliveryStatusException("Inavlid delivery status");
 
     }
 

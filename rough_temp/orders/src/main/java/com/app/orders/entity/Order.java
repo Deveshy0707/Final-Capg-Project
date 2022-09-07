@@ -20,7 +20,7 @@ public class Order {
 
     private String restrauntName;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<ItemDetails> itemList=new ArrayList<>();
     private Double totalPrice;
 

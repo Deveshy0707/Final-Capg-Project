@@ -3,7 +3,7 @@ package com.app.orders.service;
 import com.app.orders.constant.DeliveryStatus;
 import com.app.orders.dto.*;
 import com.app.orders.entity.Order;
-import com.app.orders.exceptions.InavlidDeliveryStatusException;
+import com.app.orders.exceptions.InvalidDeliveryStatusException;
 import com.app.orders.exceptions.OderNotFoundException;
 import com.app.orders.repository.IItemsRepository;
 import com.app.orders.repository.IOrderRepository;
@@ -35,7 +35,7 @@ public class OrderServiceImpl implements IOrderService{
     public OrderDetails placeOrder(PlaceOrder createOrder) {
 
         for(ItemDetails it: createOrder.getItemList()){
-            ;
+            itemsRepository.save(orderUtil.itemDetails_To_Items(it));
         }
         Double totalPrice=0.0;
         for(ItemDetails it: createOrder.getItemList()){
@@ -119,7 +119,7 @@ public class OrderServiceImpl implements IOrderService{
     }
 
     @Override
-    public OrderDetails changeDeliveryStatus(ChangeOrderStatus orderStatus) throws OderNotFoundException, InavlidDeliveryStatusException {
+    public OrderDetails changeDeliveryStatus(ChangeOrderStatus orderStatus) throws OderNotFoundException, InvalidDeliveryStatusException {
         Optional<Order> optional= orderRepository.findById(orderStatus.getOrderId());
 
         if(optional.isEmpty()){
