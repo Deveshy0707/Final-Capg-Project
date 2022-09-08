@@ -20,7 +20,8 @@ public class Order {
 
     private String restrauntName;
 
-    private List<Long> itemList=new ArrayList<>();
+    @OneToMany
+    private List<Item> itemList=new ArrayList<>();
     private Double totalPrice;
 
     @Enumerated(EnumType.STRING)
@@ -43,11 +44,11 @@ public class Order {
         this.restrauntName = restrauntName;
     }
 
-    public List<Long> getItemList() {
+    public List<Item> getItemList() {
         return itemList;
     }
 
-    public void setItemList(List<Long> itemList) {
+    public void setItemList(List<Item> itemList) {
         this.itemList = itemList;
     }
 

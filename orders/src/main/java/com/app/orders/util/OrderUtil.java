@@ -4,6 +4,7 @@ import com.app.orders.constant.DeliveryStatus;
 import com.app.orders.dto.FullOrderDetails;
 import com.app.orders.dto.ItemDetails;
 import com.app.orders.dto.OrderDetails;
+import com.app.orders.entity.Item;
 import com.app.orders.entity.Order;
 import com.app.orders.exceptions.InvalidDeliveryStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -42,11 +42,34 @@ public class OrderUtil {
         FullOrderDetails fullorderDetails=new FullOrderDetails();
         fullorderDetails.setRestrauntId(given.getRestrauntId());
         fullorderDetails.setRestauntName(given.getRestrauntName());
-        fullorderDetails.setItemsList(getItems(given.getItemList()));
+        List<Item> item=given.getItemList();
+        List<ItemDetails> list=new ArrayList<>();
+        for(Item it: item){
+            list.add(item_To_ItemDetails(it));
+        }
+        fullorderDetails.setItemsList(list);
         fullorderDetails.setTotalPrice(given.getTotalPrice());
         fullorderDetails.setDeliveryStatus(enum_To_String(given.getDeliveryStatus()));
 
         return new FullOrderDetails();
+    }
+
+    public ItemDetails item_To_ItemDetails(Item item){
+        ItemDetails itemDetails=new ItemDetails();
+        itemDetails.setItemId(item.getItemId());
+        itemDetails.setItemName(item.getItemName());
+        itemDetails.setPrice(item.getPrice());
+
+        return itemDetails;
+    }
+
+    public Item itemDetails_To_Item(ItemDetails given){
+        Item item=new Item();
+        item.setItemId(given.getItemId());
+        item.setItemName(given.getItemName());
+        item.setPrice(given.getPrice());
+
+        return item;
     }
 
     public String enum_To_String(DeliveryStatus given){

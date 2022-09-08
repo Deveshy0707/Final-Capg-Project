@@ -2,6 +2,7 @@ package com.app.orders.service;
 
 import com.app.orders.constant.DeliveryStatus;
 import com.app.orders.dto.*;
+import com.app.orders.entity.Item;
 import com.app.orders.entity.Order;
 import com.app.orders.exceptions.InvalidDeliveryStatusException;
 import com.app.orders.exceptions.OderNotFoundException;
@@ -43,7 +44,13 @@ public class OrderServiceImpl implements IOrderService{
         Order order= new Order();
         order.setRestrauntId(createOrder.getRestrauntId());
         order.setRestrauntName(createOrder.getRestrauntName());
-        order.setItemList(createOrder.getItemList());
+
+        List<ItemDetails> itemDetails=orderUtil.getItems(createOrder.getItemList());
+        List<Item> list=new ArrayList<>();
+        for(ItemDetails it: itemDetails){
+            list.add(orderUtil.itemDetails_To_Item(it));
+        }
+        order.setItemList(list);
         order.setTotalPrice(totalPrice);
         order.setDeliveryStatus(DeliveryStatus.NOT_DISPATCHED);
 
@@ -57,7 +64,7 @@ public class OrderServiceImpl implements IOrderService{
     @Override
     public List<OrderDetails> checkAllOrderAdmin(Long id) {
 
-        List<Order> list= orderRepository.findAllByRestrauntId(id);
+        List<Order> list= orderRepository.findByRestrauntId(id);
         List<OrderDetails> desired=new ArrayList<>();
         for(Order it: list){
             desired.add(orderUtil.Order_To_OrderDetails(it));

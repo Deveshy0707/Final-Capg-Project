@@ -8,6 +8,7 @@ public class FullOrderDetails {
 
     private String restauntName;
     private List<ItemDetails> itemsList;
+    //private List<Long> quantity;
     private Double totalPrice;
     private String deliveryStatus;
 

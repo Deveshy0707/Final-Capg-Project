@@ -1,18 +1,17 @@
-package com.app.orders.dto;
+package com.app.orders.entity;
 
-public class ItemDetails {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name="Items")
+@Entity
+public class Item {
+
+    @Id
     private Long itemId;
     private String itemName;
     private Double price;
-
-    public ItemDetails(){}
-
-    public ItemDetails(Long itemId, String itemName, Double price) {
-        this.itemId = itemId;
-        this.itemName = itemName;
-        this.price = price;
-    }
 
     public Long getItemId() {
         return itemId;
