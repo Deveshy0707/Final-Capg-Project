@@ -34,10 +34,7 @@ public class OrderServiceImpl implements IOrderService{
     @Override
     //
     public OrderDetails placeOrder(PlaceOrder createOrder) {
-        /*
-        for(ItemDetails it: createOrder.getItemList()){
-            ;
-        }*/
+
         Double totalPrice=0.0;
         totalPrice=orderUtil.getTotal(createOrder.getItemList());
 
@@ -47,8 +44,11 @@ public class OrderServiceImpl implements IOrderService{
 
         List<ItemDetails> itemDetails=orderUtil.getItems(createOrder.getItemList());
         List<Item> list=new ArrayList<>();
+        Item item=new Item();
         for(ItemDetails it: itemDetails){
-            list.add(orderUtil.itemDetails_To_Item(it));
+            item=orderUtil.itemDetails_To_Item(it);
+            item=itemsRepository.save(item);
+            list.add(item);
         }
         order.setItemList(list);
         order.setTotalPrice(totalPrice);
