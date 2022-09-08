@@ -38,7 +38,7 @@ public class OrderController {
     }
 
     //
-    @PostMapping("/getAllOrder")
+    @PostMapping("/getAllOrderCustomer")
     public List<OrderDetails> checkAllOrderCustomer(@RequestBody GetAllOrder orderId) throws Exception {
 
         List<OrderDetails> list=service.checkAllOrderCustomer(orderId);

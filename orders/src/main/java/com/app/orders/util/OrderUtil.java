@@ -25,9 +25,10 @@ public class OrderUtil {
     @Value("")
     private String itemBaseUrl;
 
-    public OrderDetails Order_To_OrderDetails(Order given){
+    public OrderDetails order_To_OrderDetails(Order given){
 
         OrderDetails orderDetails=new OrderDetails();
+        orderDetails.setOrderId(given.getId());
         orderDetails.setRestrauntId(given.getRestrauntId());
         orderDetails.setRestauntName(given.getRestrauntName());
         orderDetails.setItemCount((long) given.getItemList().size());
@@ -37,7 +38,7 @@ public class OrderUtil {
         return orderDetails;
     }
 
-    public FullOrderDetails Order_To_FullOrderDetails(Order given){
+    public FullOrderDetails order_To_FullOrderDetails(Order given){
 
         FullOrderDetails fullorderDetails=new FullOrderDetails();
         fullorderDetails.setRestrauntId(given.getRestrauntId());
@@ -51,7 +52,7 @@ public class OrderUtil {
         fullorderDetails.setTotalPrice(given.getTotalPrice());
         fullorderDetails.setDeliveryStatus(enum_To_String(given.getDeliveryStatus()));
 
-        return new FullOrderDetails();
+        return fullorderDetails;
     }
 
     public ItemDetails item_To_ItemDetails(Item item){
@@ -79,14 +80,14 @@ public class OrderUtil {
         return desired;
     }
 
-    public DeliveryStatus String_To_Enum(String given) throws InvalidDeliveryStatusException {
+    public DeliveryStatus string_To_Enum(String given) throws InvalidDeliveryStatusException {
 
         DeliveryStatus values[]= DeliveryStatus.values();
 
         DeliveryStatus desired;
         for(DeliveryStatus it: values){
 
-            if(it.toString()==given){
+            if(given.equals(it.toString())){
                 desired=it;
                 return desired;
             }

@@ -47,7 +47,11 @@ public class OrderServiceImpl implements IOrderService{
         Item item=new Item();
         for(ItemDetails it: itemDetails){
             item=orderUtil.itemDetails_To_Item(it);
-            item=itemsRepository.save(item);
+
+            Optional<Item> optional=itemsRepository.findById(item.getItemId());
+            if(optional.isEmpty()) {
+                item = itemsRepository.save(item);
+            }
             list.add(item);
         }
         order.setItemList(list);
@@ -56,7 +60,7 @@ public class OrderServiceImpl implements IOrderService{
 
         order= orderRepository.save(order);
 
-        OrderDetails orderDetails= orderUtil.Order_To_OrderDetails(order);
+        OrderDetails orderDetails= orderUtil.order_To_OrderDetails(order);
         return orderDetails;
     }
 
@@ -67,7 +71,7 @@ public class OrderServiceImpl implements IOrderService{
         List<Order> list= orderRepository.findByRestrauntId(id);
         List<OrderDetails> desired=new ArrayList<>();
         for(Order it: list){
-            desired.add(orderUtil.Order_To_OrderDetails(it));
+            desired.add(orderUtil.order_To_OrderDetails(it));
         }
         return desired;
     }
@@ -84,7 +88,7 @@ public class OrderServiceImpl implements IOrderService{
                 throw new OderNotFoundException("Order not found in database");
             }
             order=optional.get();
-            list.add(orderUtil.Order_To_OrderDetails(order));
+            list.add(orderUtil.order_To_OrderDetails(order));
         }
         return list;
     }
@@ -99,7 +103,7 @@ public class OrderServiceImpl implements IOrderService{
         }
 
         Order order=optional.get();
-        FullOrderDetails fullOrderDetails=orderUtil.Order_To_FullOrderDetails(order);
+        FullOrderDetails fullOrderDetails=orderUtil.order_To_FullOrderDetails(order);
         return fullOrderDetails;
     }
 
@@ -112,10 +116,10 @@ public class OrderServiceImpl implements IOrderService{
         }
 
         Order order=optional.get();
-        DeliveryStatus status= orderUtil.String_To_Enum(orderStatus.getDeliveryStatus());
+        DeliveryStatus status= orderUtil.string_To_Enum(orderStatus.getDeliveryStatus());
         order.setDeliveryStatus(status);
 
-        OrderDetails orderDetails=orderUtil.Order_To_OrderDetails(order);
+        OrderDetails orderDetails=orderUtil.order_To_OrderDetails(order);
         return orderDetails;
     }
 

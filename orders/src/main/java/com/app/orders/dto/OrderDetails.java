@@ -4,6 +4,7 @@ import java.util.List;
 
 public class OrderDetails {
 
+    private Long orderId;
     private Long restrauntId;
 
     private String restauntName;
@@ -11,6 +12,14 @@ public class OrderDetails {
     private Long itemCount;
     private Double totalPrice;
     private String deliveryStatus;
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
 
     public Long getRestrauntId() {
         return restrauntId;

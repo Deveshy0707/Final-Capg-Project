@@ -20,13 +20,17 @@ public class Order {
 
     private String restrauntName;
 
-    @OneToMany
+    //@OneToMany
+    @ManyToMany
     private List<Item> itemList=new ArrayList<>();
     private Double totalPrice;
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
+    public Long getId() {
+        return id;
+    }
 
     public Long getRestrauntId() {
         return restrauntId;
