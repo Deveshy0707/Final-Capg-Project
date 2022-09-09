@@ -45,7 +45,7 @@ public class OrderServiceImpl implements IOrderService{
 
     public Order newOrder(RequestCreateOrder createOrder){
         Order order=new Order();
-        order.setCustomerID(createOrder.getCustomerId());
+        order.setCustomerId(createOrder.getCustomerId());
         order.setRestrauntId(createOrder.getRestrauntId());
         order.setRestrauntName(createOrder.getRestrauntName());
 

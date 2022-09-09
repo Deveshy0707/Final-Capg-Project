@@ -1,15 +1,25 @@
 package com.app.orders.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RequestCreateOrder {
 
+    @Min(1)
+    @NotNull
     private Long customerId;
 
+    @Min(1)
+    @NotNull
     private Long restrauntId;
+
+    @NotEmpty
     private String restrauntName;
 
+    @NotEmpty
     private ArrayList<ArrayList<Long>>  itemList;//= new ArrayList<ArrayList<Long>>();
 
     public RequestCreateOrder(){}
