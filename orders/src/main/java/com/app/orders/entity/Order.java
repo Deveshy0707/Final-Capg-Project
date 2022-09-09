@@ -15,6 +15,8 @@ public class Order {
     @Id
     private Long id;
 
+    private Long customerID;
+
     private Long restrauntId;
 
     private String restrauntName;
@@ -29,6 +31,14 @@ public class Order {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(Long customerID) {
+        this.customerID = customerID;
     }
 
     public Long getRestrauntId() {

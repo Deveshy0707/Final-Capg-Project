@@ -13,9 +13,11 @@ public interface IOrderService {
     List<ResponseOrderDetails> checkAllOrderAdmin(Long id);
 
    // List<ResponseOrderDetails> checkAllOrderCustomer(RequestAllOrderDetails orderId) throws OderNotFoundException;
-    List<ResponseOrderDetails> checkAllOrderCustomer(List<Long> orderId) throws OderNotFoundException;
+    List<ResponseOrderDetails> checkAllOrderCustomer(Long customerId);
     ResponseFullOrderDetails getFullOrderDetails(Long id) throws OderNotFoundException;
 
     ResponseOrderDetails changeDeliveryStatus(RequestChangeOrderStatus orderStatus) throws OderNotFoundException, InvalidDeliveryStatusException;
+
+    String cancelOrder(Long id) throws OderNotFoundException;
     
 }

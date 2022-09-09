@@ -29,8 +29,8 @@ public class OrderController {
         return responseOrderDetails;
     }
 
-    @GetMapping("/getAllOrdersAdmin/{id}")
-    public List<ResponseOrderDetails> checkAllOrderAdmin(@PathVariable("id") Long restrauntId) {
+    @GetMapping("/getAllOrdersAdmin/{restrauntId}")
+    public List<ResponseOrderDetails> checkAllOrderAdmin(@PathVariable("restrauntId") Long restrauntId) {
 
         List<ResponseOrderDetails> list=service.checkAllOrderAdmin(restrauntId);
 
@@ -38,10 +38,10 @@ public class OrderController {
     }
 
     
-    @GetMapping("/getAllOrderCustomer/{orderIds}")
-    public List<ResponseOrderDetails> checkAllOrderCustomer(@PathVariable List<Long> orderIds) throws Exception {
+    @GetMapping("/getAllOrderCustomer/{customerId}")
+    public List<ResponseOrderDetails> checkAllOrderCustomer(@PathVariable Long customerId) {
 
-        List<ResponseOrderDetails> list=service.checkAllOrderCustomer(orderIds);
+        List<ResponseOrderDetails> list=service.checkAllOrderCustomer(customerId);
 
         return list;
     }

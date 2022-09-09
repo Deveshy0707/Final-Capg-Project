@@ -5,16 +5,27 @@ import java.util.List;
 
 public class RequestCreateOrder {
 
+    private Long customerId;
+
     private Long restrauntId;
     private String restrauntName;
 
     private ArrayList<ArrayList<Long>>  itemList;//= new ArrayList<ArrayList<Long>>();
 
     public RequestCreateOrder(){}
-    public RequestCreateOrder(Long restrauntId, String restrauntName, ArrayList<ArrayList<Long>> itemList) {
+    public RequestCreateOrder(Long customerId, Long restrauntId, String restrauntName, ArrayList<ArrayList<Long>> itemList) {
+        this.customerId=customerId;
         this.restrauntId = restrauntId;
         this.restrauntName = restrauntName;
         this.itemList = itemList;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public Long getRestrauntId() {

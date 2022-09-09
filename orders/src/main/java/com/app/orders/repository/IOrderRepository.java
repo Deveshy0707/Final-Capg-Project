@@ -11,4 +11,6 @@ public interface IOrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByRestrauntId(Long id);
 
+    List<Order> findByCustomerId(Long id);
+
 }

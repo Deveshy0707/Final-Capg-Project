@@ -45,6 +45,7 @@ public class OrderServiceImpl implements IOrderService{
 
     public Order newOrder(RequestCreateOrder createOrder){
         Order order=new Order();
+        order.setCustomerID(createOrder.getCustomerId());
         order.setRestrauntId(createOrder.getRestrauntId());
         order.setRestrauntName(createOrder.getRestrauntName());
 
@@ -79,9 +80,9 @@ public class OrderServiceImpl implements IOrderService{
     }
     
     @Override
-    public List<ResponseOrderDetails> checkAllOrderAdmin(Long id) {
+    public List<ResponseOrderDetails> checkAllOrderAdmin(Long restrauntId) {
 
-        List<Order> list= orderRepository.findByRestrauntId(id);
+        List<Order> list= orderRepository.findByRestrauntId(restrauntId);
         List<ResponseOrderDetails> desired=new ArrayList<>();
         for(Order it: list){
             desired.add(orderUtil.order_To_OrderDetails(it));
@@ -90,18 +91,12 @@ public class OrderServiceImpl implements IOrderService{
     }
 
     @Override
-    public List<ResponseOrderDetails> checkAllOrderCustomer(List<Long> orderId) throws OderNotFoundException {
+    public List<ResponseOrderDetails> checkAllOrderCustomer(Long customerId) {
 
+        List<Order> orderList= orderRepository.findByCustomerId(customerId);
         List<ResponseOrderDetails> list =new ArrayList<>();
-        Optional<Order> optional;
-        Order order;
-        for(Long it: orderId){
-            optional= orderRepository.findById(it);
-            if(optional.isEmpty()){
-                throw new OderNotFoundException("Order not found in database");
-            }
-            order=optional.get();
-            list.add(orderUtil.order_To_OrderDetails(order));
+        for(Order it: orderList){
+            list.add(orderUtil.order_To_OrderDetails(it));
         }
         return list;
     }
