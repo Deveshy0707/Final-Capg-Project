@@ -29,23 +29,36 @@ public class RequestCreateOrder {
         this.itemList = itemList;
     }
 
+
     public Long getCustomerId() {
         return customerId;
     }
 
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
 
     public Long getRestaurantId() {
         return restaurantId;
     }
 
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
+    }
 
     public String getRestaurantName() {
         return restaurantName;
     }
 
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
 
     public ArrayList<ArrayList<Long>> getItemList() {
         return itemList;
     }
 
+    public void setItemList(ArrayList<ArrayList<Long>> itemList) {
+        this.itemList = itemList;
+    }
 }

@@ -17,6 +17,7 @@ public class ItemDetails {
 
     }
 
+
     public Long getItemId() {
         return itemId;
     }
