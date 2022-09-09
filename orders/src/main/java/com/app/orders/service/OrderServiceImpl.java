@@ -77,7 +77,7 @@ public class OrderServiceImpl implements IOrderService{
 
         return order;
     }
-    //
+    
     @Override
     public List<ResponseOrderDetails> checkAllOrderAdmin(Long id) {
 
@@ -90,7 +90,7 @@ public class OrderServiceImpl implements IOrderService{
     }
 
     @Override
-    public List<ResponseOrderDetails> checkAllOrderCustomer(/*RequestAllOrderDetails*/List<Long> orderId) throws OderNotFoundException {
+    public List<ResponseOrderDetails> checkAllOrderCustomer(List<Long> orderId) throws OderNotFoundException {
 
         List<ResponseOrderDetails> list =new ArrayList<>();
         Optional<Order> optional;

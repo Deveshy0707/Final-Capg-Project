@@ -37,7 +37,7 @@ public class OrderController {
         return list;
     }
 
-    //
+    
     @GetMapping("/getAllOrderCustomer/{orderIds}")
     public List<ResponseOrderDetails> checkAllOrderCustomer(@PathVariable List<Long> orderIds) throws Exception {
 
