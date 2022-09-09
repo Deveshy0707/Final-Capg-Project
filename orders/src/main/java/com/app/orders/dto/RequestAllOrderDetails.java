@@ -2,7 +2,7 @@ package com.app.orders.dto;
 
 import java.util.List;
 
-public class GetAllOrder {
+public class RequestAllOrderDetails {
 
     private List<Long> orderId;
 

@@ -1,6 +1,6 @@
 package com.app.orders.dto;
 
-public class ChangeOrderStatus {
+public class RequestChangeOrderStatus {
 
     private Long orderId;
     private String deliveryStatus;

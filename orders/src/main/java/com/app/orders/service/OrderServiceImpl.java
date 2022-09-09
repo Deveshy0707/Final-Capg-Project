@@ -32,44 +32,57 @@ public class OrderServiceImpl implements IOrderService{
 
 
     @Override
-    //
-    public OrderDetails placeOrder(PlaceOrder createOrder) {
+    public ResponseOrderDetails placeOrder(RequestCreateOrder createOrder) {
 
-        Double totalPrice=0.0;
-        totalPrice=orderUtil.getTotal(createOrder.getItemList());
 
-        Order order= new Order();
+        Order order= newOrder(createOrder);
+
+        order= orderRepository.save(order);
+
+        ResponseOrderDetails responseOrderDetails = orderUtil.order_To_OrderDetails(order);
+        return responseOrderDetails;
+    }
+
+    public Order newOrder(RequestCreateOrder createOrder){
+        Order order=new Order();
         order.setRestrauntId(createOrder.getRestrauntId());
         order.setRestrauntName(createOrder.getRestrauntName());
 
-        List<ItemDetails> itemDetails=orderUtil.getItems(createOrder.getItemList());
+        List<Long> itemIdList=new ArrayList<>();
+        for(List<Long> it: createOrder.getItemList()){
+            itemIdList.add(it.get(0));
+        }
+        List<ItemDetails> itemDetails =orderUtil.getItems(itemIdList);
         List<Item> list=new ArrayList<>();
         Item item=new Item();
-        for(ItemDetails it: itemDetails){
-            item=orderUtil.itemDetails_To_Item(it);
+        Double totalPrice=0.0;
 
-            Optional<Item> optional=itemsRepository.findById(item.getItemId());
+        for(int i=0; i<itemDetails.size(); i++){
+
+            Long quantity=createOrder.getItemList().get(i).get(1);
+            Double pricePerUnit=itemDetails.get(i).getItemPrice();
+            totalPrice+=  pricePerUnit*quantity;
+            
+            item=orderUtil.itemDetails_To_Item(itemDetails.get(i), quantity);
+            item = itemsRepository.save(item);
+            /*Optional<Item> optional=itemsRepository.findById(item.getItemId());
             if(optional.isEmpty()) {
-                item = itemsRepository.save(item);
-            }
+
+            }*/
             list.add(item);
         }
         order.setItemList(list);
         order.setTotalPrice(totalPrice);
         order.setDeliveryStatus(DeliveryStatus.NOT_DISPATCHED);
 
-        order= orderRepository.save(order);
-
-        OrderDetails orderDetails= orderUtil.order_To_OrderDetails(order);
-        return orderDetails;
+        return order;
     }
-
     //
     @Override
-    public List<OrderDetails> checkAllOrderAdmin(Long id) {
+    public List<ResponseOrderDetails> checkAllOrderAdmin(Long id) {
 
         List<Order> list= orderRepository.findByRestrauntId(id);
-        List<OrderDetails> desired=new ArrayList<>();
+        List<ResponseOrderDetails> desired=new ArrayList<>();
         for(Order it: list){
             desired.add(orderUtil.order_To_OrderDetails(it));
         }
@@ -77,12 +90,12 @@ public class OrderServiceImpl implements IOrderService{
     }
 
     @Override
-    public List<OrderDetails> checkAllOrderCustomer(GetAllOrder orderId) throws OderNotFoundException {
+    public List<ResponseOrderDetails> checkAllOrderCustomer(/*RequestAllOrderDetails*/List<Long> orderId) throws OderNotFoundException {
 
-        List<OrderDetails> list =new ArrayList<>();
+        List<ResponseOrderDetails> list =new ArrayList<>();
         Optional<Order> optional;
         Order order;
-        for(Long it: orderId.getOrderId()){
+        for(Long it: orderId){
             optional= orderRepository.findById(it);
             if(optional.isEmpty()){
                 throw new OderNotFoundException("Order not found in database");
@@ -94,7 +107,7 @@ public class OrderServiceImpl implements IOrderService{
     }
 
     @Override
-    public FullOrderDetails getFullOrderDetails(Long id) throws OderNotFoundException {
+    public ResponseFullOrderDetails getFullOrderDetails(Long id) throws OderNotFoundException {
 
         Optional<Order> optional= orderRepository.findById(id);
 
@@ -103,12 +116,12 @@ public class OrderServiceImpl implements IOrderService{
         }
 
         Order order=optional.get();
-        FullOrderDetails fullOrderDetails=orderUtil.order_To_FullOrderDetails(order);
-        return fullOrderDetails;
+        ResponseFullOrderDetails responseFullOrderDetails =orderUtil.order_To_FullOrderDetails(order);
+        return responseFullOrderDetails;
     }
 
     @Override
-    public OrderDetails changeDeliveryStatus(ChangeOrderStatus orderStatus) throws OderNotFoundException, InvalidDeliveryStatusException {
+    public ResponseOrderDetails changeDeliveryStatus(RequestChangeOrderStatus orderStatus) throws OderNotFoundException, InvalidDeliveryStatusException {
         Optional<Order> optional= orderRepository.findById(orderStatus.getOrderId());
 
         if(optional.isEmpty()){
@@ -119,14 +132,25 @@ public class OrderServiceImpl implements IOrderService{
         DeliveryStatus status= orderUtil.string_To_Enum(orderStatus.getDeliveryStatus());
         order.setDeliveryStatus(status);
 
-        OrderDetails orderDetails=orderUtil.order_To_OrderDetails(order);
-        return orderDetails;
+        ResponseOrderDetails responseOrderDetails =orderUtil.order_To_OrderDetails(order);
+        return responseOrderDetails;
     }
 
     @Override
     public String cancelOrder(Long id) throws OderNotFoundException {
+
+        Optional<Order> optional= orderRepository.findById(id);
+
+        if(optional.isEmpty()){
+            throw new OderNotFoundException("Order not found in database");
+        }
+        Order order= optional.get();
+        for(Item it:order.getItemList()){
+            itemsRepository.deleteById(it.getId());
+        }
+
         orderRepository.deleteById(id);
 
-        return "Order with order Id= "+ id +" is cancelled" ;
+        return "Order with orderId = "+ id +" is cancelled" ;
     }
 }

@@ -2,24 +2,17 @@ package com.app.orders.dto;
 
 import java.util.List;
 
-public class OrderDetails {
+public class ResponseFullOrderDetails {
 
-    private Long orderId;
     private Long restrauntId;
 
     private String restauntName;
 
-    private Long itemCount;
+    private List<ItemDetails> itemsList;
+
     private Double totalPrice;
+
     private String deliveryStatus;
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
 
     public Long getRestrauntId() {
         return restrauntId;
@@ -37,12 +30,12 @@ public class OrderDetails {
         this.restauntName = restauntName;
     }
 
-    public Long getItemCount() {
-        return itemCount;
+    public List<ItemDetails> getItemsList() {
+        return itemsList;
     }
 
-    public void setItemCount(Long itemCount) {
-        this.itemCount = itemCount;
+    public void setItemsList(List<ItemDetails> itemsList) {
+        this.itemsList = itemsList;
     }
 
     public Double getTotalPrice() {

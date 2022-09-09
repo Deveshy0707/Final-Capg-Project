@@ -1,7 +1,6 @@
 package com.app.orders.entity;
 
 import com.app.orders.constant.DeliveryStatus;
-import com.app.orders.dto.ItemDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class Order {
     private String restrauntName;
 
     //@OneToMany
-    @ManyToMany
+    @OneToMany
     private List<Item> itemList=new ArrayList<>();
     private Double totalPrice;
 

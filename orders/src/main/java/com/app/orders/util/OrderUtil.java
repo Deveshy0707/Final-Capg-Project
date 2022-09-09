@@ -1,9 +1,9 @@
 package com.app.orders.util;
 
 import com.app.orders.constant.DeliveryStatus;
-import com.app.orders.dto.FullOrderDetails;
+import com.app.orders.dto.ResponseFullOrderDetails;
 import com.app.orders.dto.ItemDetails;
-import com.app.orders.dto.OrderDetails;
+import com.app.orders.dto.ResponseOrderDetails;
 import com.app.orders.entity.Item;
 import com.app.orders.entity.Order;
 import com.app.orders.exceptions.InvalidDeliveryStatusException;
@@ -25,50 +25,56 @@ public class OrderUtil {
     @Value("")
     private String itemBaseUrl;
 
-    public OrderDetails order_To_OrderDetails(Order given){
+    public ResponseOrderDetails order_To_OrderDetails(Order given){
 
-        OrderDetails orderDetails=new OrderDetails();
-        orderDetails.setOrderId(given.getId());
-        orderDetails.setRestrauntId(given.getRestrauntId());
-        orderDetails.setRestauntName(given.getRestrauntName());
-        orderDetails.setItemCount((long) given.getItemList().size());
-        orderDetails.setTotalPrice(given.getTotalPrice());
-        orderDetails.setDeliveryStatus(enum_To_String(given.getDeliveryStatus()));
+        ResponseOrderDetails responseOrderDetails =new ResponseOrderDetails();
+        responseOrderDetails.setOrderId(given.getId());
+        responseOrderDetails.setRestrauntId(given.getRestrauntId());
+        responseOrderDetails.setRestauntName(given.getRestrauntName());
+        Long count=0L;
+        for(Item it: given.getItemList()){
+            count+=it.getQuantity();
+        }
+        responseOrderDetails.setItemCount(count);
+        responseOrderDetails.setTotalPrice(given.getTotalPrice());
+        responseOrderDetails.setDeliveryStatus(enum_To_String(given.getDeliveryStatus()));
 
-        return orderDetails;
+        return responseOrderDetails;
     }
 
-    public FullOrderDetails order_To_FullOrderDetails(Order given){
+    public ResponseFullOrderDetails order_To_FullOrderDetails(Order given){
 
-        FullOrderDetails fullorderDetails=new FullOrderDetails();
-        fullorderDetails.setRestrauntId(given.getRestrauntId());
-        fullorderDetails.setRestauntName(given.getRestrauntName());
+        ResponseFullOrderDetails fullorderDetailsResponse =new ResponseFullOrderDetails();
+        fullorderDetailsResponse.setRestrauntId(given.getRestrauntId());
+        fullorderDetailsResponse.setRestauntName(given.getRestrauntName());
         List<Item> item=given.getItemList();
         List<ItemDetails> list=new ArrayList<>();
         for(Item it: item){
             list.add(item_To_ItemDetails(it));
         }
-        fullorderDetails.setItemsList(list);
-        fullorderDetails.setTotalPrice(given.getTotalPrice());
-        fullorderDetails.setDeliveryStatus(enum_To_String(given.getDeliveryStatus()));
+        fullorderDetailsResponse.setItemsList(list);
+        fullorderDetailsResponse.setTotalPrice(given.getTotalPrice());
+        fullorderDetailsResponse.setDeliveryStatus(enum_To_String(given.getDeliveryStatus()));
 
-        return fullorderDetails;
+        return fullorderDetailsResponse;
     }
 
     public ItemDetails item_To_ItemDetails(Item item){
-        ItemDetails itemDetails=new ItemDetails();
+        ItemDetails itemDetails =new ItemDetails();
         itemDetails.setItemId(item.getItemId());
         itemDetails.setItemName(item.getItemName());
-        itemDetails.setPrice(item.getPrice());
+        itemDetails.setItemPrice(item.getPrice());
+        itemDetails.setItemQuantity(item.getQuantity());
 
         return itemDetails;
     }
 
-    public Item itemDetails_To_Item(ItemDetails given){
+    public Item itemDetails_To_Item(ItemDetails given, Long quantity){
         Item item=new Item();
         item.setItemId(given.getItemId());
         item.setItemName(given.getItemName());
-        item.setPrice(given.getPrice());
+        item.setPrice(given.getItemPrice());
+        item.setQuantity(quantity);
 
         return item;
     }
@@ -109,12 +115,6 @@ public class OrderUtil {
         return list;
     }
 
-    public Double getTotal(List<Long> itemId){
-
-        return 100.0;
-    }
-
-
     /*
     public List<ItemDetails> getItems(List<Long> itemsId){
         String url= itemBaseUrl+ "/";
@@ -123,11 +123,6 @@ public class OrderUtil {
         List<ItemDetails> list= Arrays.asList(items);
         return list;
     }
-    public Double getTotal(List<Long> itemId){
-        String url= itemBaseUrl+ "/";
-
-        Double totalPrice=restTemplate.getForObject(url, Double.class);
-        return totalPrice;
-    }*/
+    */
 
 }

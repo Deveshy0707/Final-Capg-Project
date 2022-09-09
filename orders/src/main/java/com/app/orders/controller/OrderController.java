@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -19,49 +21,47 @@ public class OrderController {
     private OrderServiceImpl service;
 
 
-    //
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/placeOrder")
-    public OrderDetails placeOrder(@RequestBody PlaceOrder createOrder){
+    public ResponseOrderDetails placeOrder(@RequestBody RequestCreateOrder createOrder){
 
-        OrderDetails orderDetails=service.placeOrder(createOrder);
-        return orderDetails;
+        ResponseOrderDetails responseOrderDetails =service.placeOrder(createOrder);
+        return responseOrderDetails;
     }
 
-
     @GetMapping("/getAllOrdersAdmin/{id}")
-    public List<OrderDetails> checkAllOrderAdmin(@PathVariable("id") Long restrauntId) {
+    public List<ResponseOrderDetails> checkAllOrderAdmin(@PathVariable("id") Long restrauntId) {
 
-        List<OrderDetails> list=service.checkAllOrderAdmin(restrauntId);
+        List<ResponseOrderDetails> list=service.checkAllOrderAdmin(restrauntId);
 
         return list;
     }
 
     //
-    @PostMapping("/getAllOrderCustomer")
-    public List<OrderDetails> checkAllOrderCustomer(@RequestBody GetAllOrder orderId) throws Exception {
+    @GetMapping("/getAllOrderCustomer/{orderIds}")
+    public List<ResponseOrderDetails> checkAllOrderCustomer(@PathVariable List<Long> orderIds) throws Exception {
 
-        List<OrderDetails> list=service.checkAllOrderCustomer(orderId);
+        List<ResponseOrderDetails> list=service.checkAllOrderCustomer(orderIds);
 
         return list;
     }
 
     @GetMapping("/fullOrderDetail/{id}")
-    public FullOrderDetails fullOrderDetails(@PathVariable ("id") Long orderId) throws Exception {
+    public ResponseFullOrderDetails fullOrderDetails(@PathVariable ("id") Long orderId) throws Exception {
 
-        FullOrderDetails fullOrderDetails=service.getFullOrderDetails(orderId);
+        ResponseFullOrderDetails responseFullOrderDetails =service.getFullOrderDetails(orderId);
 
-        return fullOrderDetails;
+        return responseFullOrderDetails;
     }
 
-    @PostMapping("/changeDeliveryStatus")
-    public OrderDetails changeDeliveryStatus(@RequestBody ChangeOrderStatus orderStatus) throws InvalidDeliveryStatusException, OderNotFoundException {
+    @PutMapping("/changeDeliveryStatus")
+    public ResponseOrderDetails changeDeliveryStatus(@RequestBody RequestChangeOrderStatus orderStatus) throws InvalidDeliveryStatusException, OderNotFoundException {
 
-        OrderDetails orderDetails=service.changeDeliveryStatus(orderStatus);
-        return orderDetails;
+        ResponseOrderDetails responseOrderDetails =service.changeDeliveryStatus(orderStatus);
+        return responseOrderDetails;
     }
 
-    @PostMapping("/cancelOrder/{id}")
+    @DeleteMapping("/cancelOrder/{id}")
     public String cancelOrder(@PathVariable ("id") Long orderId) throws OderNotFoundException {
 
         String msg=service.cancelOrder(orderId);

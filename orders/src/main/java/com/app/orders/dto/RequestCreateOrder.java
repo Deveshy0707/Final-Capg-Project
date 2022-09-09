@@ -1,12 +1,21 @@
 package com.app.orders.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceOrder {
+public class RequestCreateOrder {
 
     private Long restrauntId;
     private String restrauntName;
-    private List<Long> itemList;
+
+    private ArrayList<ArrayList<Long>>  itemList;//= new ArrayList<ArrayList<Long>>();
+
+    public RequestCreateOrder(){}
+    public RequestCreateOrder(Long restrauntId, String restrauntName, ArrayList<ArrayList<Long>> itemList) {
+        this.restrauntId = restrauntId;
+        this.restrauntName = restrauntName;
+        this.itemList = itemList;
+    }
 
     public Long getRestrauntId() {
         return restrauntId;
@@ -24,11 +33,11 @@ public class PlaceOrder {
         this.restrauntName = restrauntName;
     }
 
-    public List<Long> getItemList() {
+    public ArrayList<ArrayList<Long>> getItemList() {
         return itemList;
     }
 
-    public void setItemList(List<Long> itemList) {
+    public void setItemList(ArrayList<ArrayList<Long>> itemList) {
         this.itemList = itemList;
     }
 }
