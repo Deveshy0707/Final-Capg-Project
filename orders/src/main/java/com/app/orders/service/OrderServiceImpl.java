@@ -46,8 +46,8 @@ public class OrderServiceImpl implements IOrderService{
     public Order newOrder(RequestCreateOrder createOrder){
         Order order=new Order();
         order.setCustomerId(createOrder.getCustomerId());
-        order.setRestrauntId(createOrder.getRestrauntId());
-        order.setRestrauntName(createOrder.getRestrauntName());
+        order.setRestaurantId(createOrder.getRestaurantId());
+        order.setRestaurantName(createOrder.getRestaurantName());
 
         List<Long> itemIdList=new ArrayList<>();
         for(List<Long> it: createOrder.getItemList()){
@@ -55,7 +55,7 @@ public class OrderServiceImpl implements IOrderService{
         }
         List<ItemDetails> itemDetails =orderUtil.getItems(itemIdList);
         List<Item> list=new ArrayList<>();
-        Item item=new Item();
+        Item item;
         Double totalPrice=0.0;
 
         for(int i=0; i<itemDetails.size(); i++){
@@ -66,10 +66,7 @@ public class OrderServiceImpl implements IOrderService{
             
             item=orderUtil.itemDetails_To_Item(itemDetails.get(i), quantity);
             item = itemsRepository.save(item);
-            /*Optional<Item> optional=itemsRepository.findById(item.getItemId());
-            if(optional.isEmpty()) {
 
-            }*/
             list.add(item);
         }
         order.setItemList(list);
@@ -80,21 +77,25 @@ public class OrderServiceImpl implements IOrderService{
     }
     
     @Override
-    public List<ResponseOrderDetails> checkAllOrderAdmin(Long restrauntId) {
+    public List<ResponseOrderDetails> checkAllOrderAdmin(Long restaurantId) {
 
-        List<Order> list= orderRepository.findByRestrauntId(restrauntId);
-        List<ResponseOrderDetails> desired=new ArrayList<>();
+        List<Order> list= orderRepository.findByRestaurantId(restaurantId);
+        List<ResponseOrderDetails> desired = newArrayList();
         for(Order it: list){
             desired.add(orderUtil.order_To_OrderDetails(it));
         }
         return desired;
     }
 
+    public List<ResponseOrderDetails> newArrayList(){
+        return new ArrayList<>();
+    }
+
     @Override
     public List<ResponseOrderDetails> checkAllOrderCustomer(Long customerId) {
 
         List<Order> orderList= orderRepository.findByCustomerId(customerId);
-        List<ResponseOrderDetails> list =new ArrayList<>();
+        List<ResponseOrderDetails> list =newArrayList();
         for(Order it: orderList){
             list.add(orderUtil.order_To_OrderDetails(it));
         }
@@ -146,6 +147,10 @@ public class OrderServiceImpl implements IOrderService{
 
         orderRepository.deleteById(id);
 
-        return "Order with orderId = "+ id +" is cancelled" ;
+        return  newString(id);
+    }
+
+    public String newString(Long id){
+        return "Order with orderId = "+ id +" is cancelled";
     }
 }

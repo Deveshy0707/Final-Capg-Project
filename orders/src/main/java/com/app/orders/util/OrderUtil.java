@@ -29,8 +29,9 @@ public class OrderUtil {
 
         ResponseOrderDetails responseOrderDetails =new ResponseOrderDetails();
         responseOrderDetails.setOrderId(given.getId());
-        responseOrderDetails.setRestrauntId(given.getRestrauntId());
-        responseOrderDetails.setRestauntName(given.getRestrauntName());
+        responseOrderDetails.setCustomerId(given.getCustomerId());
+        responseOrderDetails.setRestaurantId(given.getRestaurantId());
+        responseOrderDetails.setRestaurantName(given.getRestaurantName());
         Long count=0L;
         for(Item it: given.getItemList()){
             count+=it.getQuantity();
@@ -44,19 +45,20 @@ public class OrderUtil {
 
     public ResponseFullOrderDetails order_To_FullOrderDetails(Order given){
 
-        ResponseFullOrderDetails fullorderDetailsResponse =new ResponseFullOrderDetails();
-        fullorderDetailsResponse.setRestrauntId(given.getRestrauntId());
-        fullorderDetailsResponse.setRestauntName(given.getRestrauntName());
+        ResponseFullOrderDetails fullOrderDetailsResponse =new ResponseFullOrderDetails();
+        fullOrderDetailsResponse.setCustomerId(given.getCustomerId());
+        fullOrderDetailsResponse.setRestaurantId(given.getRestaurantId());
+        fullOrderDetailsResponse.setRestaurantName(given.getRestaurantName());
         List<Item> item=given.getItemList();
         List<ItemDetails> list=new ArrayList<>();
         for(Item it: item){
             list.add(item_To_ItemDetails(it));
         }
-        fullorderDetailsResponse.setItemsList(list);
-        fullorderDetailsResponse.setTotalPrice(given.getTotalPrice());
-        fullorderDetailsResponse.setDeliveryStatus(enum_To_String(given.getDeliveryStatus()));
+        fullOrderDetailsResponse.setItemsList(list);
+        fullOrderDetailsResponse.setTotalPrice(given.getTotalPrice());
+        fullOrderDetailsResponse.setDeliveryStatus(enum_To_String(given.getDeliveryStatus()));
 
-        return fullorderDetailsResponse;
+        return fullOrderDetailsResponse;
     }
 
     public ItemDetails item_To_ItemDetails(Item item){
@@ -99,7 +101,7 @@ public class OrderUtil {
             }
         }
 
-        throw new InvalidDeliveryStatusException("Inavlid delivery status");
+        throw new InvalidDeliveryStatusException("Invalid delivery status");
 
     }
 

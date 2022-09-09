@@ -4,7 +4,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RequestCreateOrder {
 
@@ -14,19 +13,19 @@ public class RequestCreateOrder {
 
     @Min(1)
     @NotNull
-    private Long restrauntId;
+    private Long restaurantId;
 
     @NotEmpty
-    private String restrauntName;
+    private String restaurantName;
 
     @NotEmpty
-    private ArrayList<ArrayList<Long>>  itemList;//= new ArrayList<ArrayList<Long>>();
+    private ArrayList<ArrayList<Long>>  itemList;
 
     public RequestCreateOrder(){}
-    public RequestCreateOrder(Long customerId, Long restrauntId, String restrauntName, ArrayList<ArrayList<Long>> itemList) {
+    public RequestCreateOrder(Long customerId, Long restaurantId, String restaurantName, ArrayList<ArrayList<Long>> itemList) {
         this.customerId=customerId;
-        this.restrauntId = restrauntId;
-        this.restrauntName = restrauntName;
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
         this.itemList = itemList;
     }
 
@@ -34,31 +33,19 @@ public class RequestCreateOrder {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+
+    public Long getRestaurantId() {
+        return restaurantId;
     }
 
-    public Long getRestrauntId() {
-        return restrauntId;
+
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setRestrauntId(Long restrauntId) {
-        this.restrauntId = restrauntId;
-    }
-
-    public String getRestrauntName() {
-        return restrauntName;
-    }
-
-    public void setRestrauntName(String restrauntName) {
-        this.restrauntName = restrauntName;
-    }
 
     public ArrayList<ArrayList<Long>> getItemList() {
         return itemList;
     }
 
-    public void setItemList(ArrayList<ArrayList<Long>> itemList) {
-        this.itemList = itemList;
-    }
 }

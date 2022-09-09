@@ -4,9 +4,11 @@ import java.util.List;
 
 public class ResponseFullOrderDetails {
 
-    private Long restrauntId;
+    private Long customerId;
 
-    private String restauntName;
+    private Long restaurantId;
+
+    private String restaurantName;
 
     private List<ItemDetails> itemsList;
 
@@ -14,41 +16,30 @@ public class ResponseFullOrderDetails {
 
     private String deliveryStatus;
 
-    public Long getRestrauntId() {
-        return restrauntId;
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-    public void setRestrauntId(Long restrauntId) {
-        this.restrauntId = restrauntId;
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
-    public String getRestauntName() {
-        return restauntName;
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
-    public void setRestauntName(String restauntName) {
-        this.restauntName = restauntName;
-    }
-
-    public List<ItemDetails> getItemsList() {
-        return itemsList;
-    }
 
     public void setItemsList(List<ItemDetails> itemsList) {
         this.itemsList = itemsList;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
 
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public String getDeliveryStatus() {
-        return deliveryStatus;
-    }
 
     public void setDeliveryStatus(String deliveryStatus) {
         this.deliveryStatus = deliveryStatus;

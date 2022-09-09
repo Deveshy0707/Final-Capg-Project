@@ -3,57 +3,45 @@ package com.app.orders.dto;
 public class ResponseOrderDetails {
 
     private Long orderId;
-    private Long restrauntId;
 
-    private String restauntName;
+    private Long customerId;
+    private Long restaurantId;
+
+    private String restaurantName;
 
     private Long itemCount;
     private Double totalPrice;
     private String deliveryStatus;
 
-    public Long getOrderId() {
-        return orderId;
-    }
+
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
-    public Long getRestrauntId() {
-        return restrauntId;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
-    public void setRestrauntId(Long restrauntId) {
-        this.restrauntId = restrauntId;
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
-    public String getRestauntName() {
-        return restauntName;
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
-    public void setRestauntName(String restauntName) {
-        this.restauntName = restauntName;
-    }
-
-    public Long getItemCount() {
-        return itemCount;
-    }
 
     public void setItemCount(Long itemCount) {
         this.itemCount = itemCount;
     }
 
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
 
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public String getDeliveryStatus() {
-        return deliveryStatus;
-    }
 
     public void setDeliveryStatus(String deliveryStatus) {
         this.deliveryStatus = deliveryStatus;

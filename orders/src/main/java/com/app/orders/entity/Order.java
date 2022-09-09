@@ -17,9 +17,9 @@ public class Order {
 
     private Long customerId;
 
-    private Long restrauntId;
+    private Long restaurantId;
 
-    private String restrauntName;
+    private String restaurantName;
 
     //@OneToMany
     @OneToMany
@@ -41,20 +41,20 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public Long getRestrauntId() {
-        return restrauntId;
+    public Long getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRestrauntId(Long restrauntId) {
-        this.restrauntId = restrauntId;
+    public void setRestaurantId(Long restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
-    public String getRestrauntName() {
-        return restrauntName;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setRestrauntName(String restrauntName) {
-        this.restrauntName = restrauntName;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public List<Item> getItemList() {

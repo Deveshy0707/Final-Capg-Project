@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 @RestController
@@ -29,10 +28,10 @@ public class OrderController {
         return responseOrderDetails;
     }
 
-    @GetMapping("/getAllOrdersAdmin/{restrauntId}")
-    public List<ResponseOrderDetails> checkAllOrderAdmin(@PathVariable("restrauntId") Long restrauntId) {
+    @GetMapping("/getAllOrdersAdmin/{restaurantId}")
+    public List<ResponseOrderDetails> checkAllOrderAdmin(@PathVariable("restaurantId") Long restaurantId) {
 
-        List<ResponseOrderDetails> list=service.checkAllOrderAdmin(restrauntId);
+        List<ResponseOrderDetails> list=service.checkAllOrderAdmin(restaurantId);
 
         return list;
     }

@@ -14,7 +14,7 @@ public class ItemDetails {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemPrice = itemPrice;
-        //this.itemQuantity=itemQuantity;
+
     }
 
     public Long getItemId() {
