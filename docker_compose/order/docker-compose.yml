@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+    
+    
+   
+    orders:        
+        build: orders
+        ports:
+        - 8484:8484
+     
+  
+
+    postgres:        
+        image: postgres:14.5
+        ports:
+        - 5432:5432
+        restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: mydbms
+            POSTGRES_DB: orderdb
+
+
+ 
+volumes:
+  pgdata:    
+    
+ 

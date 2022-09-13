@@ -1,0 +1,12 @@
+spring:
+# DATABASE PROPERTIES
+  datasource:
+    url: jdbc:mysql://localhost:3306/food_order_service?createDatabaseIfNotExist=true
+    username: username
+    password: password
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    
