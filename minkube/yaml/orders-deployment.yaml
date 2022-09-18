@@ -17,7 +17,8 @@ spec:
     spec:   #What state you desire for the object
 
       containers:
-      - name: recruiterms #container name
+      - name: orders #container name
         image: 'deveshy/orders:x1' #image name
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8484 # demo runs on port 8484
